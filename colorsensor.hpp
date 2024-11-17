@@ -26,6 +26,7 @@ private:
   std::string directory, modefile, rfile, gfile, bfile;
   colorsensor_mode _prev_mode;
   void _SET_MODE(colorsensor_mode mode) {
+    if(_prev_mode == mode)return;
     std::ofstream modestream(modefile);
     switch (mode) {
     case COLOR_REFLECT:
@@ -73,7 +74,6 @@ public:
   rgb get_rgb() {
     if (_prev_mode != RGB_RAW) {
       _SET_MODE(RGB_RAW);
-      _prev_mode = RGB_RAW;
     }
     rgb ret;
     {
