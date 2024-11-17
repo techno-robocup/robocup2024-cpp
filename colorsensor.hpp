@@ -94,6 +94,7 @@ public:
       getline(bluestream, tmp);
       ret.b = std::stoi(tmp);
     }
+    return ret;
   }
 };
 #endif

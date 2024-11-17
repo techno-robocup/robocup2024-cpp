@@ -1,11 +1,13 @@
 #include <iostream>
 #include <colorsensor.hpp>
+#include <thread>
+#include <chrono>
 int main () {
   colorsensor leftcolor(1), rightcolor(2);
   while(true) {
-
-  std::cout << leftcolor.get_rgb().r << " " << leftcolor.get_rgb().g << " " << leftcolor.get_rgb().b << std::endl;
-  std::cout << rightcolor.get_rgb().r << " " << rightcolor.get_rgb().g << " " << rightcolor.get_rgb().b << std::endl;
+    rgb a = leftcolor.get_rgb(), b = rightcolor.get_rgb();
+    std::cout << a.r << " " << a.g << " " << a.b << " " << b.r << " " << b.g << " " << b.b << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
   return 0;
 }
