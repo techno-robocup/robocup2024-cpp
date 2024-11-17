@@ -3,13 +3,13 @@
 #include <fstream>
 #include <ports.hpp>
 enum colorsensor_mode {
-  COLOR_REFLECT = 0,
-  COLOR_AMBIENT = 1,
-  COLOR_COLOR = 2,
-  REF_RAW = 3,
-  RGB_RAW = 4,
-  COL_CAL = 5,
-  UNDEFINED = 6
+  COLOR_REFLECT,
+  COLOR_AMBIENT,
+  COLOR_COLOR,
+  REF_RAW,
+  RGB_RAW,
+  COL_CAL,
+  UNDEFINED
 };
 struct rgb {
   int r, g, b;
@@ -30,20 +30,29 @@ private:
     switch (mode) {
     case COLOR_REFLECT:
       modestream << "COL-REFLECT\n";
+      break;
     case COLOR_AMBIENT:
       modestream << "COL-AMBIENT\n";
+      break;
     case COLOR_COLOR:
       modestream << "COL-COLOR\n";
+      break;
     case REF_RAW:
       modestream << "REF-RAW\n";
+      break;
     case RGB_RAW:
       modestream << "RGB-RAW\n";
+      break;
     case COL_CAL:
       modestream << "COL-CAL\n";
+      break;
     case UNDEFINED:
+      std::cerr<<"UNDEFINED ABORTATION"<<std::endl;
       abort();
+      break;
     default:
       abort();
+      break;
     }
     return;
   }
@@ -62,7 +71,9 @@ public:
     bfile = directory + "/value2";
   }
   rgb get_rgb() {
-    if (_prev_mode != COLOR_COLOR) {
+    if (_prev_mode != RGB_RAW) {
+      _SET_MODE(RGB_RAW);
+      _prev_mode = RGB_RAW;
     }
     rgb ret;
     {
