@@ -1,12 +1,11 @@
 #include <iostream>
-#include <ports.hpp>
+#include <colorsensor.hpp>
 int main () {
-  std::cout << get_type_for_sensor(1) << std::endl;
-  std::cout<< get_type_for_sensor(2) << std::endl;
-  std::cout<< get_type_for_sensor(3) << std::endl;
-  std::cout<< get_type_for_sensor(4) << std::endl;
-  std::cout<<get_type_for_tacho_motor('B')<<std::endl;
-  std::cout<<get_type_for_tacho_motor('C')<<std::endl;
-  std::cout<<get_type_for_tacho_motor('D')<<std::endl;
+  colorsensor leftcolor(1), rightcolor(2);
+  while(true) {
+
+  std::cout << leftcolor.get_rgb().r << " " << leftcolor.get_rgb().g << " " << leftcolor.get_rgb().b << std::endl;
+  std::cout << rightcolor.get_rgb().r << " " << rightcolor.get_rgb().g << " " << rightcolor.get_rgb().b << std::endl;
+  }
   return 0;
 }
