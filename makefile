@@ -1,4 +1,4 @@
 SRC = main.cpp
-all:
+all: $(SRC)
 	docker run --rm -v .:/src rotarymars/ev3devcc-autobuild
 
