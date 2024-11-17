@@ -26,7 +26,8 @@ private:
   std::string directory, modefile, rfile, gfile, bfile;
   colorsensor_mode _prev_mode;
   void _SET_MODE(colorsensor_mode mode) {
-    if(_prev_mode == mode)return;
+    if (_prev_mode == mode)
+      return;
     std::ofstream modestream(modefile);
     switch (mode) {
     case COLOR_REFLECT:
@@ -48,7 +49,7 @@ private:
       modestream << "COL-CAL\n";
       break;
     case UNDEFINED:
-      std::cerr<<"UNDEFINED ABORTATION"<<std::endl;
+      std::cerr << "UNDEFINED ABORTATION" << std::endl;
       abort();
       break;
     default:
