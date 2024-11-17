@@ -7,7 +7,7 @@ enum colorsensor_mode {
   COLOR_AMBIENT = 1,
   COLOR_COLOR = 2,
   REF_RAW = 3,
-  rgb_RAW = 4,
+  RGB_RAW = 4,
   COL_CAL = 5,
   UNDEFINED = 6
 };
@@ -25,6 +25,28 @@ private:
   int _portnum;
   std::string directory, modefile, rfile, gfile, bfile;
   colorsensor_mode _prev_mode;
+  void _SET_MODE(colorsensor_mode mode) {
+    std::ofstream modestream(modefile);
+    switch (mode) {
+    case COLOR_REFLECT:
+      modestream << "COL-REFLECT\n";
+    case COLOR_AMBIENT:
+      modestream << "COL-AMBIENT\n";
+    case COLOR_COLOR:
+      modestream << "COL-COLOR\n";
+    case REF_RAW:
+      modestream << "REF-RAW\n";
+    case RGB_RAW:
+      modestream << "RGB-RAW\n";
+    case COL_CAL:
+      modestream << "COL-CAL\n";
+    case UNDEFINED:
+      abort();
+    default:
+      abort();
+    }
+    return;
+  }
 
 public:
   colorsensor(int portnum) : _portnum(portnum), _prev_mode(UNDEFINED) {
