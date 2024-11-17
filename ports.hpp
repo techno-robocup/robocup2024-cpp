@@ -64,4 +64,44 @@ std::string get_type_for_sensor(int port) {
     throw port_not_found(std::to_string(port));
 }
 
+
+std::string get_type_for_tacho_motor(char port) {
+  std::string target_address = "ev3-ports:out";
+  target_address += port;
+  std::string motor_dir = "/sys/class/tacho-motor";
+  DIR* dir = opendir(motor_dir.c_str());
+  if (!dir) {
+    perror("opendir failed");
+    throw std::runtime_error("failed to open directory");
+  }
+
+  struct dirent* entry;
+  while ((entry = readdir(dir)) != nullptr) {
+    std::string motor_name = entry->d_name;
+    if(motor_name == "." || motor_name == "..")continue;
+    std::string address_file =motor_dir + "/" + motor_name + "/address";
+    {
+      std::ifstream address_stream(address_file);
+      if(!address_stream.is_open())continue;
+      std::string address;
+      std::getline(address_stream, address);
+      if(address == target_address) {
+        std::string driver_file = motor_dir + "/" + motor_name + "/driver_name";
+        {
+          std::ifstream driver_stream(driver_file);
+          if(!driver_stream.is_open()) {
+            closedir(dir);
+            return "";
+          }
+          std::string driver_name;
+          std::getline(driver_stream,driver_name);
+          closedir(dir);
+          return driver_name;
+        }
+      }
+    }
+  }
+  closedir(dir);
+  throw port_not_found(std::to_string(port));
+}
 #endif
