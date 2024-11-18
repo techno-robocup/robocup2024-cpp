@@ -9,7 +9,7 @@ enum colorsensor_mode {
   REF_RAW,
   RGB_RAW,
   COL_CAL,
-  UNDEFINED
+  COLOR_UNDEFINED
 };
 struct rgb {
   int r, g, b;
@@ -48,7 +48,7 @@ private:
     case COL_CAL:
       modestream << "COL-CAL\n";
       break;
-    case UNDEFINED:
+    case COLOR_UNDEFINED:
       std::cerr << "UNDEFINED ABORTATION" << std::endl;
       abort();
       break;
@@ -60,7 +60,7 @@ private:
   }
 
 public:
-  colorsensor(int portnum) : _portnum(portnum), _prev_mode(UNDEFINED) {
+  colorsensor(int portnum) : _portnum(portnum), _prev_mode(COLOR_UNDEFINED) {
     std::string mode = "lego-ev3-color";
     if (get_type_for_sensor(_portnum) != mode) {
       std::cerr << "colorsensor not connected for port " << _portnum << '\n';
