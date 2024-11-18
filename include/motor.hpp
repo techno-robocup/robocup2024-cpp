@@ -16,26 +16,27 @@ enum motor_stop_action { COAST, BRAKE, HOLD };
 class lmotor {
 private:
   char _portchar;
-  std::string directory, commandfile, stopactionfile, duty_cyclefile, positionfile,
-      ramp_downfile, ramp_upfile, speedfile, timefile;
+  std::string directory, commandfile, stopactionfile, duty_cyclefile,
+      positionfile, ramp_downfile, ramp_upfile, speedfile, timefile;
   motor_command _prev_command;
   motor_stop_action _prev_action;
   void _SET_STOP_ACTION(motor_stop_action action) {
-    if (_prev_action == action) return;
+    if (_prev_action == action)
+      return;
     std::ofstream actionstream(stopactionfile);
     switch (action) {
-      case COAST:
-        actionstream << "coast\n";
-        break;
-      case BRAKE:
-        actionstream << "brake\n";
-        break;
-      case HOLD:
-        actionstream << "hold\n";
-        break;
-      default:
-        std::cerr<<"Invalid Action"<<std::endl;
-        abort();
+    case COAST:
+      actionstream << "coast\n";
+      break;
+    case BRAKE:
+      actionstream << "brake\n";
+      break;
+    case HOLD:
+      actionstream << "hold\n";
+      break;
+    default:
+      std::cerr << "Invalid Action" << std::endl;
+      abort();
     }
     return;
   }
