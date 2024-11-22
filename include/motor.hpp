@@ -91,10 +91,10 @@ public:
     timefile = directory + "/time_sp";
   }
   void run(int speed) {
-    if (!(0 <= speed && speed <= 1050)) {
-      std::cerr << "speed violation" << std::endl;
-      abort();
-    }
+    /*if (!(-1050 <= speed && speed <= 1050)) {*/
+    /*  std::cerr << "speed violation" << std::endl;*/
+    /*  abort();*/
+    /*}*/
     {
       std::ofstream speedstream(speedfile);
       speedstream << speed << '\n';
